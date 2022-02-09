@@ -8,15 +8,19 @@ import { Grid } from '@mui/material';
 function ProductsList() {
   const [products, setProducts] = useState(allProduct);
   const [category, setCategory] = useState(allCategories);
+  const [alignment, setAlignment] = useState(allProduct);
 
-  const sliceCategory = category.map((item) => {
-    return item.slice(6);
-  });
+  const sliceCategory = category.map((item) => item.slice(6));
 
   const handleCategory = (categoryName) => {
-    const result = products.filter(
-      (product) => product.category === categoryName,
-    );
+    setAlignment(products);
+    let result = [];
+    for (let i = 0; i < products.length; i++) {
+      if (products[i].category === categoryName) {
+        result.push(products[i]);
+      }
+    }
+    setAlignment(result);
   };
 
   return (
@@ -30,11 +34,18 @@ function ProductsList() {
         columnGap={1}
         marginBottom={5}
       >
-        <Categories
-          sliceCategory={sliceCategory}
-          handleCategory={handleCategory}
-          //categoryName={categoryName}
-        ></Categories>
+        {sliceCategory.map((categoryName, index, result, setProducts) => {
+          return (
+            <Categories
+              result={result}
+              setProducts={setProducts}
+              alignment={alignment}
+              categoryName={categoryName}
+              key={index}
+              handleCategory={handleCategory}
+            />
+          );
+        })}
       </Grid>
 
       <Grid
@@ -46,7 +57,7 @@ function ProductsList() {
         columnGap={2}
         gridRow={4}
       >
-        {products.map((product) => {
+        {alignment.map((product) => {
           return (
             <Product
               key={product.id}

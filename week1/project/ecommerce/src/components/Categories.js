@@ -1,20 +1,22 @@
-import { Button } from '@mui/material';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import React from 'react';
-import { allCategories } from '../fake-data/all-categories';
 
-function Categories({ handleCategory, sliceCategory }) {
-  return sliceCategory.map((categoryName, index) => {
-    return (
-      <Button
-        id="Button11"
+function Categories({ handleCategory, categoryName, alignment }) {
+  return (
+    <ToggleButtonGroup
+      color="primary"
+      value={alignment}
+      exclusive
+      onChange={() => {
+        handleCategory(categoryName);
+      }}
+    >
+      <ToggleButton
         variant="outlined"
-        key={index}
-        // onClick={handleCategory('JEWELERY')}
-      >
-        {`FAKE: ${categoryName}`}
-      </Button>
-    );
-  });
+        value={categoryName}
+      >{`FAKE: ${categoryName}`}</ToggleButton>
+    </ToggleButtonGroup>
+  );
 }
 
 export default Categories;
