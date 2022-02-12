@@ -1,21 +1,27 @@
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Button } from '@mui/material';
 import React from 'react';
+import { makeStyles } from '@mui/styles';
 
-function Categories({ handleCategory, categoryName, alignment }) {
+const useStyles = makeStyles({
+  button: {
+    backgroundColor: '#bdbdbd',
+  },
+});
+
+function Categories({ handleCategory, categoryName, chosenCategory }) {
+  const classes = useStyles();
   return (
-    <ToggleButtonGroup
-      color="primary"
-      value={alignment}
-      exclusive
-      onChange={() => {
+    <Button
+      className={classes.button}
+      onClick={() => {
         handleCategory(categoryName);
       }}
+      variant="contained"
+      color={chosenCategory === categoryName ? 'primary' : 'grey'}
+      value={categoryName}
     >
-      <ToggleButton
-        variant="outlined"
-        value={categoryName}
-      >{`FAKE: ${categoryName}`}</ToggleButton>
-    </ToggleButtonGroup>
+      {`FAKE: ${categoryName}`}
+    </Button>
   );
 }
 

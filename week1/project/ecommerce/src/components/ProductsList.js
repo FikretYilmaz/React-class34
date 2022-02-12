@@ -9,22 +9,29 @@ function ProductsList() {
   const [products, setProducts] = useState(allProduct);
   const [category, setCategory] = useState(allCategories);
   const [alignment, setAlignment] = useState(allProduct);
+  const [chosenCategory, setChosenCategory] = useState('');
 
   const sliceCategory = category.map((item) => item.slice(6));
 
   const handleCategory = (categoryName) => {
-    setAlignment(products);
-    let result = [];
-    for (let i = 0; i < products.length; i++) {
-      if (products[i].category === categoryName) {
-        result.push(products[i]);
+    if (chosenCategory) {
+      setAlignment(products);
+      setChosenCategory('');
+    } else {
+      let result = [];
+      for (let i = 0; i < products.length; i++) {
+        if (products[i].category === categoryName) {
+          result.push(products[i]);
+        }
       }
+      setChosenCategory(categoryName);
+      setAlignment(result);
     }
-    setAlignment(result);
   };
 
   return (
     <React.Fragment>
+      <h1>Products</h1>
       <Grid
         container
         direction="row"
@@ -39,10 +46,10 @@ function ProductsList() {
             <Categories
               result={result}
               setProducts={setProducts}
-              alignment={alignment}
               categoryName={categoryName}
               key={index}
               handleCategory={handleCategory}
+              chosenCategory={chosenCategory}
             />
           );
         })}
