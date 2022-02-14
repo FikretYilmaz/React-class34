@@ -16,7 +16,7 @@ function Categories({ handleCategory, categoryName, chosenCategory }) {
       onClick={() => {
         handleCategory(categoryName);
       }}
-      variant="contained"
+      variant={chosenCategory === categoryName ? 'outlined' : 'contained'}
       color={chosenCategory === categoryName ? 'primary' : 'grey'}
       value={categoryName}
     >
