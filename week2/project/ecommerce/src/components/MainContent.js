@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Category from './Category';
 import Product from './Product';
 
-import { Grid } from '@mui/material';
 const productsURL = 'https://fakestoreapi.com/products/';
 const categoryURL = 'https://fakestoreapi.com/products/categories';
 
@@ -45,63 +44,17 @@ function MainContent() {
   if (isLoading) {
     return <p>Loading ...</p>;
   }
-  const handleCategory = (categoryName) => {
-    if (chosenCategory === categoryName) {
-      setProducts(updateProducts);
-      setChosenCategory('');
-    } else {
-      const result = updateProducts.filter(
-        (item) => item.category === categoryName,
-      );
-      setChosenCategory(categoryName);
-      setProducts(result);
-    }
-  };
-
   return (
     <React.Fragment>
       <h1>Products</h1>
-      <Grid
-        container
-        direction="row"
-        justifyContent="flex-start"
-        alignItems="center"
-        rowGap={1}
-        columnGap={1}
-        marginBottom={5}
-      >
-        {categories.map((categoryName, index) => {
-          return (
-            <Category
-              categoryName={categoryName}
-              key={index}
-              handleCategory={handleCategory}
-              chosenCategory={chosenCategory}
-            />
-          );
-        })}
-      </Grid>
-
-      <Grid
-        container
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        rowGap={2}
-        columnGap={2}
-        gridRow={4}
-      >
-        {product.map((product) => {
-          return (
-            <Product
-              key={product.id}
-              product={product}
-              title={product.title}
-              image={product.image}
-            />
-          );
-        })}
-      </Grid>
+      <Category
+        setProducts={setProducts}
+        updateProducts={updateProducts}
+        setChosenCategory={setChosenCategory}
+        categories={categories}
+        chosenCategory={chosenCategory}
+      />
+      <Product product={product} />
     </React.Fragment>
   );
 }
