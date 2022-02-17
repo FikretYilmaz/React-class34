@@ -14,16 +14,16 @@ function Category({
   chosenCategory,
   categories,
   setProducts,
-  updateProducts,
+  filteredProducts,
   setChosenCategory,
 }) {
   const classes = useStyles();
   const handleCategory = (categoryName) => {
     if (chosenCategory === categoryName) {
-      setProducts(updateProducts);
+      setProducts(filteredProducts);
       setChosenCategory('');
     } else {
-      const result = updateProducts.filter(
+      const result = filteredProducts.filter(
         (item) => item.category === categoryName,
       );
       setChosenCategory(categoryName);

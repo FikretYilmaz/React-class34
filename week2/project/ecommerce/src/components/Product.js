@@ -19,9 +19,9 @@ function Product({ product }) {
       columnGap={2}
       gridRow={4}
     >
-      {product.map((product) => {
+      {product.map((product, index) => {
         return (
-          <Card sx={{ maxWidth: 250 }}>
+          <Card sx={{ maxWidth: 250 }} key={index}>
             <CardMedia
               component="img"
               height="300"

@@ -9,16 +9,16 @@ function MainContent() {
   const [chosenCategory, setChosenCategory] = useState('');
   const [product, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [updateProducts, setUpdateProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    const getData = async () => {
+    const fetchAllProduct = async () => {
       try {
         const response = await fetch(productsURL);
         const products = await response.json();
-        setUpdateProducts(products);
+        setFilteredProducts(products);
         setProducts(products);
         setIsLoading(false);
       } catch (error) {
@@ -26,15 +26,21 @@ function MainContent() {
         setHasError(true);
       }
     };
-    getData();
+    fetchAllProduct();
   }, []);
 
   useEffect(() => {
-    (async () => {
-      const response = await fetch(categoryURL);
-      const allCategories = await response.json();
-      setCategories(allCategories);
-    })();
+    const fetchAllCategories = async () => {
+      try {
+        const response = await fetch(categoryURL);
+        const allCategories = await response.json();
+        setCategories(allCategories);
+      } catch (error) {
+        console.error(error);
+        setHasError(true);
+      }
+    };
+    fetchAllCategories();
   }, []);
 
   if (hasError) {
@@ -49,7 +55,7 @@ function MainContent() {
       <h1>Products</h1>
       <Category
         setProducts={setProducts}
-        updateProducts={updateProducts}
+        filteredProducts={filteredProducts}
         setChosenCategory={setChosenCategory}
         categories={categories}
         chosenCategory={chosenCategory}
