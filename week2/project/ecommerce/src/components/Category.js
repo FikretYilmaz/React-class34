@@ -11,28 +11,27 @@ const useStyles = makeStyles({
 });
 
 const categoryURL = 'https://fakestoreapi.com/products/categories';
-const productByCategories = 'https://fakestoreapi.com/products/category/';
 
 function Category({
   chosenCategory,
   setProducts,
   filteredProducts,
   setChosenCategory,
-  //chosenProductsCategory,
+  selectedCategory,
 }) {
   const classes = useStyles();
 
   const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isCategoryLoading, setIsCategoryLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState([]);
+
   useEffect(() => {
     const fetchAllCategories = async () => {
       try {
         const response = await fetch(categoryURL);
         const allCategories = await response.json();
         setCategories(allCategories);
-        setIsLoading(false);
+        setIsCategoryLoading(false);
       } catch (error) {
         console.error(error);
         setHasError(true);
@@ -40,22 +39,6 @@ function Category({
     };
     fetchAllCategories();
   }, []);
-
-  useEffect(() => {
-    const fetchProductByCategories = async () => {
-      try {
-        const response = await fetch(`${productByCategories}${chosenCategory}`);
-        const productsCategory = await response.json();
-        setProducts(productsCategory);
-        setSelectedCategory(productsCategory);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setHasError(true);
-      }
-    };
-    fetchProductByCategories();
-  }, [chosenCategory]);
 
   const handleCategory = (categoryName) => {
     if (chosenCategory === categoryName) {
@@ -70,7 +53,7 @@ function Category({
     return "Oops, Couldn't get the categories";
   }
 
-  if (isLoading) {
+  if (isCategoryLoading) {
     return <p>Categories are loading ...</p>;
   }
   return (

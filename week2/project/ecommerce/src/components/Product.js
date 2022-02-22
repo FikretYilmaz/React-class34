@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
@@ -8,28 +7,9 @@ import { Grid } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { IconButton } from '@mui/material';
 
-const productsURL = 'https://fakestoreapi.com/products/';
-
-function Product({ products, setFilteredProducts, setProducts }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-  useEffect(() => {
-    const fetchAllProduct = async () => {
-      try {
-        const response = await fetch(productsURL);
-        const product = await response.json();
-        setFilteredProducts(product);
-        setProducts(product);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setHasError(true);
-      }
-    };
-    fetchAllProduct();
-  }, [setFilteredProducts, setProducts]);
+function Product({ products, isLoading, hasError }) {
   if (hasError) {
-    return "Oops, Couldn't get the categories";
+    return "Oops, Couldn't get the products";
   }
 
   if (isLoading) {
