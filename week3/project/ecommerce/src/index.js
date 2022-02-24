@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Favorites from './components/Favorites';
 import ShowProductDetails from './components/ShowProductDetails';
 import Navigation from './components/Navigation';
-import { ProductIdProvider } from './components/ProductIdContext';
+import { ProductIdProvider } from './context/ProductIdContext';
 
 ReactDOM.render(
   <React.StrictMode>

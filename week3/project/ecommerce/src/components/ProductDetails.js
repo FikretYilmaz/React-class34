@@ -8,7 +8,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { IconButton } from '@mui/material';
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { ProductIdContext } from './ProductIdContext';
+import { ProductIdContext } from '../context/ProductIdContext';
 
 const ProductDetails = ({ product }) => {
   const [addFavorite, setAddFavorite] = useState(false);

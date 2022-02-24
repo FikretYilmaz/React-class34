@@ -8,7 +8,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { ProductIdContext } from './ProductIdContext';
+import { ProductIdContext } from '../context/ProductIdContext';
 
 const ProductCard = ({ product }) => {
   const [addFavorite, setAddFavorite] = useState(false);
