@@ -12,7 +12,8 @@ import { ProductIdContext } from '../context/ProductIdContext';
 
 const ProductCard = ({ product }) => {
   const [addFavorite, setAddFavorite] = useState(false);
-  const { favoritesList, setFavoritesList } = useContext(ProductIdContext);
+  const { favoritesList, setFavoritesList, setArrayOfProductDetails } =
+    useContext(ProductIdContext);
 
   useEffect(() => {
     if (favoritesList.includes(product.id)) {
@@ -25,6 +26,9 @@ const ProductCard = ({ product }) => {
   const addToFavoriteList = () => {
     if (favoritesList.includes(product.id)) {
       setAddFavorite(false);
+      setArrayOfProductDetails((prev) =>
+        prev.filter((productDetail) => productDetail.id !== product.id),
+      );
       setFavoritesList((prev) =>
         prev.filter((productId) => productId !== product.id),
       );

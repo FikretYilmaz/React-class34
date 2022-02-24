@@ -3,10 +3,13 @@ import { ProductIdContext } from '../context/ProductIdContext.js';
 
 function useFetch() {
   const singleProductURL = 'https://fakestoreapi.com/products/';
-  const [arrayOfProductDetails, setArrayOfProductDetails] = useState([]);
-  const { favoritesList } = useContext(ProductIdContext);
+
+  const { favoritesList, setArrayOfProductDetails } =
+    useContext(ProductIdContext);
 
   useEffect(() => {
+    setArrayOfProductDetails([]);
+    console.log('render');
     async function fetchData() {
       try {
         favoritesList.forEach(async (cardId) => {
@@ -18,11 +21,10 @@ function useFetch() {
         console.error(error);
       }
     }
-    setArrayOfProductDetails([]);
     fetchData();
-  }, [favoritesList]);
+  }, []);
 
-  return { arrayOfProductDetails };
+  return {};
 }
 
 export default useFetch;
