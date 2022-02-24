@@ -1,39 +1,68 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Typography from '@mui/material/Typography';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { IconButton } from '@mui/material';
 
-import { useParams } from 'react-router-dom';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { ProductIdContext } from './ProductIdContext';
 
-import ProductCard from './ProductCard';
-const ProductDetails = () => {
-  const [isProductLoading, setIsProductLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-  const singleProductURL = 'https://fakestoreapi.com/products/';
-  const { id } = useParams();
-  const [productObject, setProductObject] = useState({});
+const ProductDetails = ({ product }) => {
+  const [addFavorite, setAddFavorite] = useState(false);
+  const { favoritesList, setFavoritesList } = useContext(ProductIdContext);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        setIsProductLoading(true);
-        const response = await fetch(`${singleProductURL}${id}`);
-        const productDetail = await response.json();
-        setProductObject(productDetail);
-        setIsProductLoading(false);
-      } catch (error) {
-        console.error(error);
-        setHasError(true);
-      }
+    if (favoritesList.includes(product.id)) {
+      setAddFavorite(true);
+    } else {
+      setAddFavorite(false);
     }
-    fetchData();
-  }, [id]);
+  }, []);
 
-  if (hasError) {
-    return "Oops, Couldn't get the product";
-  }
+  const addToFavoriteList = () => {
+    if (favoritesList.includes(product.id)) {
+      setAddFavorite(false);
+      setFavoritesList((prev) =>
+        prev.filter((productId) => productId !== product.id),
+      );
+    } else {
+      setAddFavorite(true);
+      setFavoritesList((prev) => [...prev, product.id]);
+    }
+  };
 
-  if (isProductLoading) {
-    return <p>Product is loading ...</p>;
-  }
-  return <ProductCard product={productObject} />;
+  return (
+    <Card sx={{ maxWidth: 500 }}>
+      <CardMedia
+        component="img"
+        height="400"
+        image={product.image}
+        alt="Paella dish"
+      />
+      <CardContent>
+        <Typography component="h1" variant="caption">
+          {product.title}
+        </Typography>
+        <Typography component="h1" variant="caption" color="text.secondary">
+          {product.description}
+        </Typography>
+      </CardContent>
+
+      <CardActions disableSpacing>
+        <IconButton
+          onClick={() => {
+            addToFavoriteList();
+          }}
+          aria-label="add to favorites"
+        >
+          {addFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        </IconButton>
+      </CardActions>
+    </Card>
+  );
 };
 
 export default ProductDetails;

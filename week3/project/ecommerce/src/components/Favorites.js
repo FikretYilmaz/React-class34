@@ -1,10 +1,11 @@
 import { Grid } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard.js';
 import { ProductIdContext } from './ProductIdContext.js';
 
 const Favorites = () => {
+  const navigate = useNavigate();
   const singleProductURL = 'https://fakestoreapi.com/products/';
   const [arrayOfElements, setArrayOfElements] = useState([]);
   const { favoritesList } = useContext(ProductIdContext);

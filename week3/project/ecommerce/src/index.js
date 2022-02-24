@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Favorites from './components/Favorites';
-import ProductDetails from './components/ProductDetails';
+import ShowProductDetails from './components/ShowProductDetails';
 import Navigation from './components/Navigation';
 import { ProductIdProvider } from './components/ProductIdContext';
 
@@ -17,7 +17,7 @@ ReactDOM.render(
         <Navigation />
         <Routes>
           <Route path="/" element={<App />}></Route>
-          <Route path="product/:id" element={<ProductDetails />}></Route>
+          <Route path="product/:id" element={<ShowProductDetails />}></Route>
           <Route path="favorites" element={<Favorites />}></Route>
         </Routes>
       </Router>
